@@ -1,0 +1,51 @@
+package fr.esiea.ex4A.api;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@AutoConfigureMockMvc
+class ApiControllerIT {
+
+    private final MockMvc mockMvc;
+
+    ApiControllerIT(@Autowired MockMvc mockMvc) {
+        this.mockMvc = mockMvc;
+    }
+
+    @Test
+    void add_user_test() throws Exception {
+        mockMvc
+            .perform(MockMvcRequestBuilders.post(
+                "/api/inscription").contentType(MediaType.APPLICATION_JSON).content("""
+                  {
+                    "userEmail": "machin@truc.com",
+                    "userName": "machin",
+                    "userTweeter": "machin45",
+                    "userCountry": "FR",
+                    "userSex": "M",
+                    "userSexPref": "M"
+                  }      
+                """)
+            )
+            .andExpect(status().isCreated())
+            .andExpect(content().json("""
+                {
+                   "userEmail": "machin@truc.com",
+                   "userName": "machin",
+                   "userTweeter": "machin45",
+                   "userCountry": "FR",
+                   "userSex": "M",
+                   "userSexPref": "M"
+                 }
+                """));
+    }
+}

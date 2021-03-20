@@ -1,11 +1,14 @@
 package fr.esiea.ex4A.controller;
 
+import fr.esiea.ex4A.entity.Match;
 import fr.esiea.ex4A.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,5 +21,29 @@ public class ApiController {
         User user = new User(request.get("userEmail"), request.get("userName"), request.get("userTweeter"), request.get("userCountry"), request.get("userSex"), request.get("userSexPref"));
         userList.add(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+    @GetMapping("/api/matches")
+    public ResponseEntity<?> getMatches(@RequestParam("userName") String userName, @RequestParam("userCountry") String userCountry) {
+        User requestUser = null;
+
+        for (User user : userList) {
+            if (user.getUserName().equalsIgnoreCase(userName) && user.getUserCountry().equalsIgnoreCase(userCountry)) {
+                requestUser = user;
+                break;
+            }
+        }
+
+        // user not found
+        if (requestUser == null) {
+            return new ResponseEntity<>(new ArrayList<User>(), HttpStatus.OK);
+        }
+
+        // find matches for user
+        List<Match> matches = Arrays.asList(
+            new Match("Michel", "michelbgdu77"),
+            new Match("Amandine", "amandinedu36")
+        );
+
+        return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 }

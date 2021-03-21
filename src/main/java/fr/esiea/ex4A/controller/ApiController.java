@@ -51,12 +51,17 @@ public class ApiController {
         }
 
         // find matches for user
-        List<Match> matches = Arrays.asList(
-            new Match("Michel", "michelbgdu77"),
-            new Match("Amandine", "amandinedu36")
-        );
+        List<Match> matches = new ArrayList<>();
+
+        for (User user : userList) {
+            Integer ageDiff = Math.abs(user.getUserAge() - requestUser.getUserAge());
+            if (requestUser.getUserSexPref().equalsIgnoreCase(user.getUserSex())
+                && requestUser.getUserSex().equalsIgnoreCase(user.getUserSexPref())
+                && ageDiff <= 4){
+                matches.add(new Match(user.getUserName(), user.getUserTweeter()));
+            }
+        }
 
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
-
 }

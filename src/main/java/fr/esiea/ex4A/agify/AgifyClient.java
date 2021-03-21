@@ -12,6 +12,6 @@ public interface AgifyClient {
     @GET("/")
     Call<Map<String, String>> getAge(@Query("name") String name, @Query("country_id") String countryId);
 
-    
+
 
 }

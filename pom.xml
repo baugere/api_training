@@ -62,6 +62,13 @@
 
         </dependency>
 
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit-mock</artifactId>
+            <version>2.9.0</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Dev dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

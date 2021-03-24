@@ -1,5 +1,6 @@
 package fr.esiea.ex4A.repository;
 
+import fr.esiea.ex4A.entity.Match;
 import fr.esiea.ex4A.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,5 @@ public class Repository {
 
     public List<User> getUserList() {
         return userList;
-
     }
 }

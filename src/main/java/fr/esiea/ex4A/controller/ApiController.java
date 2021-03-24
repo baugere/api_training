@@ -34,6 +34,7 @@ public class ApiController {
         repository.getUserList().add(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
     @GetMapping("/api/matches")
     public ResponseEntity<?> getMatches(@RequestParam("userName") String userName, @RequestParam("userCountry") String userCountry) {
         User requestUser = null;
@@ -55,7 +56,7 @@ public class ApiController {
 
         for (User user : repository.getUserList()) {
             Integer ageDiff = Math.abs(user.getUserAge() - requestUser.getUserAge());
-            if (requestUser.getUserSexPref().equalsIgnoreCase(user.getUserSex())
+            if (!requestUser.equals(user) && requestUser.getUserSexPref().equalsIgnoreCase(user.getUserSex())
                 && requestUser.getUserSex().equalsIgnoreCase(user.getUserSexPref())
                 && ageDiff <= 4){
                 matches.add(new Match(user.getUserName(), user.getUserTweeter()));

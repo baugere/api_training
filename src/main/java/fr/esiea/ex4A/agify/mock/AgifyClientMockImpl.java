@@ -8,10 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AgifyClientMockImpl implements AgifyClient {
-    private final BehaviorDelegate <AgifyClient> delegate ;
+    private final BehaviorDelegate<AgifyClient> delegate;
+
     public AgifyClientMockImpl(BehaviorDelegate<AgifyClient> delegate) {
         this.delegate = delegate;
     }
+
     @Override
     public Call<Map<String, String>> getAge(String name, String countryId) {
         Map<String, String> response = new HashMap<>();

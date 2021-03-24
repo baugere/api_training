@@ -16,10 +16,11 @@ public class AgifyService {
 
         this.agifyClient = agifyClient;
     }
-    public Integer getAge(String name, String countryID) throws IOException {
-        Call<Map<String, String>> apiCall =agifyClient.getAge(name, countryID);
 
-        Response<Map<String, String>> response= apiCall.execute();
-       return Integer.parseInt(response.body().getOrDefault( "age","18"));
+    public Integer getAge(String name, String countryID) throws IOException {
+        Call<Map<String, String>> apiCall = agifyClient.getAge(name, countryID);
+
+        Response<Map<String, String>> response = apiCall.execute();
+        return Integer.parseInt(response.body().getOrDefault("age", "18"));
     }
 }

@@ -38,30 +38,12 @@ public class ApiController {
     @GetMapping("/api/matches")
     public ResponseEntity<?> getMatches(@RequestParam("userName") String userName, @RequestParam("userCountry") String userCountry) {
         User requestUser = null;
-
-        for (User user : repository.getUserList()) {
-            if (user.getUserName().equalsIgnoreCase(userName) && user.getUserCountry().equalsIgnoreCase(userCountry)) {
-                requestUser = user;
-                break;
-            }
-        }
-
-        // user not found
-        if (requestUser == null) {
-            return new ResponseEntity<>(new ArrayList<User>(), HttpStatus.OK);
-        }
-
-        // find matches for user
+        for (User user : repository.getUserList()) {if (user.getUserName().equalsIgnoreCase(userName) && user.getUserCountry().equalsIgnoreCase(userCountry)) { requestUser = user;break;}}
+        if (requestUser == null) return new ResponseEntity<>(new ArrayList<User>(), HttpStatus.OK);
         List<Match> matches = new ArrayList<>();
-
         for (User user : repository.getUserList()) {
             Integer ageDiff = Math.abs(user.getUserAge() - requestUser.getUserAge());
-            if (!requestUser.equals(user) && requestUser.getUserSexPref().equalsIgnoreCase(user.getUserSex())
-                && requestUser.getUserSex().equalsIgnoreCase(user.getUserSexPref())
-                && ageDiff <= 4){
-                matches.add(new Match(user.getUserName(), user.getUserTweeter()));
-            }
-        }
-        return new ResponseEntity<>(matches, HttpStatus.OK);
+            if (!requestUser.equals(user) && requestUser.getUserSexPref().equalsIgnoreCase(user.getUserSex()) && requestUser.getUserSex().equalsIgnoreCase(user.getUserSexPref()) && ageDiff <= 4){ matches.add(new Match(user.getUserName(), user.getUserTweeter()));}
+        }return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 }
